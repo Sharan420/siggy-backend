@@ -1,10 +1,11 @@
 # Imports:
 import utils.fetchRestraunt as fetchRestraunt
 from flask import Flask, jsonify, request, make_response
+from flask_cors import CORS
 from random import shuffle
 
 app = Flask(__name__)
-
+CORS(app)
 # Functions:
 @app.route('/api/v1/restraunt', methods=['POST'])
 def restraunt():
