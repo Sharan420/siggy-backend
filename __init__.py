@@ -1,6 +1,6 @@
 # Imports:
 import utils.fetchRestraunt as fetchRestraunt
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, make_response
 from random import shuffle
 
 app = Flask(__name__)
@@ -21,7 +21,9 @@ def restraunt():
     return jsonify(fetchRestraunt.getRestraunt(url)[0:length])
   if url:
     return jsonify(fetchRestraunt.getRestraunt(url))
-  return jsonify({'error': 'Please provide a URL'})
+  response = make_response(jsonify({'error': 'Please provide a URL'}))
+  response.status_code = 400
+  return response
 
 if __name__ == '__main__':
     app.run()
