@@ -12,6 +12,7 @@ def getRestraunt(url):
     # Selenium:
     options = Options()
     options.binary_location = r'C:\Program Files\Mozilla Firefox\firefox.exe'
+    options.add_argument("--headless")
     driver = webdriver.Firefox(executable_path='utils/geckodriver.exe',options=options)
 
     # Get the URL:
