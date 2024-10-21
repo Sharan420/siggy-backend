@@ -21,7 +21,8 @@ def home():
 
 @app.route('/api/v1/restraunt', methods=['POST'])
 def restraunt():
-  return jsonify({'error': 'W.I.P'})
+  data = fetchRestraunt.getRestraunt(request.json.get('url'))
+  return jsonify(data)
 
 @app.route('/api/v1/restraunt/menu', methods=['POST'])
 def menu():
@@ -31,7 +32,7 @@ def menu():
   random_order = data.get('random') if data else False
 
   if url and length and random_order:
-    itemarr = fetchRestraunt.getRestraunt(url)
+    itemarr = fetchRestraunt.getMenu(url)
     shuffle(itemarr)
     return jsonify(itemarr[0:length])
   if url and length:
@@ -45,4 +46,4 @@ def menu():
   return response
 
 if __name__ == '__main__':
-    app.run(host=os.getenv("SERVER_IP"), port=os.getenv("PORT"), debug=True)
+    app.run( port=os.getenv("PORT"), debug=True)

@@ -4,9 +4,13 @@ from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from dotenv import load_dotenv
+import os, time
+
+load_dotenv()
 
 # Functions:
-def getRestraunt(url):
+def getMenu(url):
   try:
     items = []
     # Selenium:
@@ -47,3 +51,39 @@ def getRestraunt(url):
     return []
   finally:
     driver.quit()
+
+def getRestraunt(url):
+  try:
+    # Selenium:
+    options = Options()
+    options.binary_location = os.getenv('BINARY_LOCATION')
+    #options.add_argument("--headless")
+    driver = webdriver.Firefox(options=options)
+
+    driver.get(url)
+    restrauntName = WebDriverWait(driver, 20).until(
+      EC.presence_of_element_located((By.CSS_SELECTOR, 'h1.sc-aXZVg.cNRZhA'))
+    ).text
+    restrauntDetailWrapper = WebDriverWait(driver, 20).until(
+      EC.presence_of_element_located((By.CSS_SELECTOR, 'div.sc-eIcdZJ.coysQn'))
+    )
+    restrauntRating = restrauntDetailWrapper.find_element(By.CSS_SELECTOR, 'div:nth-child(2)').text
+    restrauntPrice = restrauntDetailWrapper.find_element(By.CSS_SELECTOR, 'div:nth-child(4)').get_attribute('innerText')
+    restrauntLocationWrapper = driver.find_element(By.CSS_SELECTOR, 'div.sc-dwalKd.jzDxBO')
+    restrauntLocation = restrauntLocationWrapper.find_element(By.CSS_SELECTOR, 'div:nth-child(2)').text
+    return ({
+      'name': restrauntName,
+      'rating': restrauntRating,
+      'price': restrauntPrice,
+      'location': restrauntLocation,
+    })
+  
+  except Exception as e:
+    print(e)
+    return "Error"
+  finally:
+    driver.quit()
+
+
+if __name__ == '__main__':
+  print(getRestraunt("https://www.swiggy.com/city/delhi/mcdonalds-e-block-south-extension-2-rest253734"))
