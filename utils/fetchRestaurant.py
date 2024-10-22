@@ -52,7 +52,7 @@ def getMenu(url):
   finally:
     driver.quit()
 
-def getRestraunt(url):
+def getRestaurant(url):
   try:
     # Selenium:
     options = Options()
@@ -61,21 +61,21 @@ def getRestraunt(url):
     driver = webdriver.Firefox(options=options)
 
     driver.get(url)
-    restrauntName = WebDriverWait(driver, 20).until(
+    RestaurantName = WebDriverWait(driver, 20).until(
       EC.presence_of_element_located((By.CSS_SELECTOR, 'h1.sc-aXZVg.cNRZhA'))
     ).text
-    restrauntDetailWrapper = WebDriverWait(driver, 20).until(
+    RestaurantDetailWrapper = WebDriverWait(driver, 20).until(
       EC.presence_of_element_located((By.CSS_SELECTOR, 'div.sc-eIcdZJ.coysQn'))
     )
-    restrauntRating = restrauntDetailWrapper.find_element(By.CSS_SELECTOR, 'div:nth-child(2)').text
-    restrauntPrice = restrauntDetailWrapper.find_element(By.CSS_SELECTOR, 'div:nth-child(4)').get_attribute('innerText')
-    restrauntLocationWrapper = driver.find_element(By.CSS_SELECTOR, 'div.sc-dwalKd.jzDxBO')
-    restrauntLocation = restrauntLocationWrapper.find_element(By.CSS_SELECTOR, 'div:nth-child(2)').text
+    RestaurantRating = RestaurantDetailWrapper.find_element(By.CSS_SELECTOR, 'div:nth-child(2)').text
+    RestaurantPrice = RestaurantDetailWrapper.find_element(By.CSS_SELECTOR, 'div:nth-child(4)').get_attribute('innerText')
+    RestaurantLocationWrapper = driver.find_element(By.CSS_SELECTOR, 'div.sc-dwalKd.jzDxBO')
+    RestaurantLocation = RestaurantLocationWrapper.find_element(By.CSS_SELECTOR, 'div:nth-child(2)').text
     return ({
-      'name': restrauntName,
-      'rating': restrauntRating,
-      'price': restrauntPrice,
-      'location': restrauntLocation,
+      'name': RestaurantName,
+      'rating': RestaurantRating,
+      'price': RestaurantPrice,
+      'location': RestaurantLocation,
     })
   
   except Exception as e:
@@ -86,4 +86,4 @@ def getRestraunt(url):
 
 
 if __name__ == '__main__':
-  print(getRestraunt("https://www.swiggy.com/city/delhi/mcdonalds-e-block-south-extension-2-rest253734"))
+  print(getRestaurant("https://www.swiggy.com/city/delhi/mcdonalds-e-block-south-extension-2-rest253734"))

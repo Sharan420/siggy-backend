@@ -1,5 +1,5 @@
 # Imports:
-import utils.fetchRestraunt as fetchRestraunt
+import utils.fetchRestaurant as fetchRestaurant
 from flask import Flask, jsonify, request, make_response
 from flask_cors import CORS
 from dotenv import load_dotenv
@@ -19,12 +19,12 @@ def home():
   response.status_code = 200
   return response
 
-@app.route('/api/v1/restraunt', methods=['POST'])
-def restraunt():
-  data = fetchRestraunt.getRestraunt(request.json.get('url'))
+@app.route('/api/v1/restaurant', methods=['POST'])
+def Restaurant():
+  data = fetchRestaurant.getRestaurant(request.json.get('url'))
   return jsonify(data)
 
-@app.route('/api/v1/restraunt/menu', methods=['POST'])
+@app.route('/api/v1/restaurant/menu', methods=['POST'])
 def menu():
   data = request.json
   url = data.get('url') if data else None
@@ -32,13 +32,13 @@ def menu():
   random_order = data.get('random') if data else False
 
   if url and length and random_order:
-    itemarr = fetchRestraunt.getMenu(url)
+    itemarr = fetchRestaurant.getMenu(url)
     shuffle(itemarr)
     return jsonify(itemarr[0:length])
   if url and length:
-    return jsonify(fetchRestraunt.getRestraunt(url)[0:length])
+    return jsonify(fetchRestaurant.getRestaurant(url)[0:length])
   if url:
-    response = make_response(jsonify(fetchRestraunt.getRestraunt(url)))
+    response = make_response(jsonify(fetchRestaurant.getRestaurant(url)))
     response.status_code = 200
     return response
   response = make_response(jsonify({'error': 'Please provide a URL'}))
