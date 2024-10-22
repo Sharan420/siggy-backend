@@ -36,9 +36,9 @@ def menu():
     shuffle(itemarr)
     return jsonify(itemarr[0:length])
   if url and length:
-    return jsonify(fetchRestaurant.getRestaurant(url)[0:length])
+    return jsonify(fetchRestaurant.getMenu(url)[0:length])
   if url:
-    response = make_response(jsonify(fetchRestaurant.getRestaurant(url)))
+    response = make_response(jsonify(fetchRestaurant.getMenu(url)))
     response.status_code = 200
     return response
   response = make_response(jsonify({'error': 'Please provide a URL'}))
