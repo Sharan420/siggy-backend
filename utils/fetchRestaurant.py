@@ -82,6 +82,13 @@ def getRestaurant(url):
   finally:
     driver.quit()
 
-
+def testFunc():
+  options = Options()
+  options.binary_location = os.getenv('BINARY_LOCATION')
+  options.add_argument("--headless")
+  driver = webdriver.Firefox(options=options)
+  driver.get("https://www.swiggy.com/")
+  driver.quit()
 if __name__ == '__main__':
-  print(getRestaurant("https://www.swiggy.com/city/delhi/mcdonalds-e-block-south-extension-2-rest253734"))
+  testFunc()
+  # print(getRestaurant("https://www.swiggy.com/city/delhi/mcdonalds-e-block-south-extension-2-rest253734"))
