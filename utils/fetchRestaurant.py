@@ -11,13 +11,12 @@ load_dotenv()
 
 # Functions:
 def getMenu(url):
+  options = Options()
+  options.binary_location = r'/usr/bin/firefox'
+  options.add_argument("--headless")
+  driver = webdriver.Firefox(options=options)
   try:
     items = []
-    # Selenium:
-    options = Options()
-    options.binary_location = r'/usr/bin/firefox'
-    options.add_argument("--headless")
-    driver = webdriver.Firefox(options=options)
 
     # Get the URL:
     driver.get(url)
@@ -53,13 +52,12 @@ def getMenu(url):
     driver.quit()
 
 def getRestaurant(url):
+  options = Options()
+  options.binary_location = os.getenv('BINARY_LOCATION')
+  options.add_argument("--headless")
+  driver = webdriver.Firefox(options=options)
   try:
     # Selenium:
-    options = Options()
-    options.binary_location = os.getenv('BINARY_LOCATION')
-    options.add_argument("--headless")
-    driver = webdriver.Firefox(options=options)
-
     driver.get(url)
     RestaurantName = WebDriverWait(driver, 20).until(
       EC.presence_of_element_located((By.CSS_SELECTOR, 'h1.sc-aXZVg.cNRZhA'))
