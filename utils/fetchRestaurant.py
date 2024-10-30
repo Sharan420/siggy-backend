@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from dotenv import load_dotenv
+from selenium.webdriver.firefox.service import Service
 import os, time
 
 load_dotenv()
@@ -83,10 +84,11 @@ def getRestaurant(url):
     driver.quit()
 
 def testFunc():
+  service = Service(os.getenv('DRIVER_LOC'))
   options = Options()
   options.binary_location = os.getenv('BINARY_LOCATION')
   options.add_argument("--headless")
-  driver = webdriver.Firefox(options=options)
+  driver = webdriver.Firefox(service=service,options=options)
   driver.get("https://www.swiggy.com/")
   driver.quit()
 if __name__ == '__main__':
