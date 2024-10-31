@@ -11,9 +11,16 @@ import os, time
 load_dotenv()
 
 # Functions:
+def check404(driver):
+  try:
+    driver.find_element("xpath", "//div[text()='Page not found']")
+    return True
+  except:
+    return False
+
 def getMenu(url):
   options = Options()
-  options.binary_location = r'/usr/bin/firefox'
+  options.binary_location = os.getenv('BINARY_LOCATION')
   options.add_argument("--headless")
   driver = webdriver.Firefox(options=options)
   try:
@@ -21,6 +28,8 @@ def getMenu(url):
 
     # Get the URL:
     driver.get(url)
+    if check404(driver):
+      return []
     dishes = WebDriverWait(driver, 20).until(
       EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'div[data-testid="normal-dish-item"]'))
     )
@@ -60,6 +69,10 @@ def getRestaurant(url):
   try:
     # Selenium:
     driver.get(url)
+
+    if check404(driver):
+      return {}
+
     RestaurantName = WebDriverWait(driver, 20).until(
       EC.presence_of_element_located((By.CSS_SELECTOR, 'h1.sc-aXZVg.cNRZhA'))
     ).text
@@ -92,5 +105,5 @@ def testFunc():
   driver.get("https://www.swiggy.com/")
   driver.quit()
 if __name__ == '__main__':
-  testFunc()
-  # print(getRestaurant("https://www.swiggy.com/city/delhi/mcdonalds-e-block-south-extension-2-rest253734"))
+  #testFunc()
+  print(getRestaurant("https://www.swiggy.com/city/delhi/mcdonalds-e-block-south-extension-2-rest253734"))

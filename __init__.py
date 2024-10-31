@@ -21,23 +21,45 @@ def home():
 @app.route('/api/v1/restaurant', methods=['POST'])
 def Restaurant():
   data = fetchRestaurant.getRestaurant(request.json.get('url'))
-  return jsonify(data)
+  if data == {}:
+    response = make_response(jsonify({'error': 'Restaurant not found'}))
+    response.status_code = 404
+    return response
+  response = make_response(jsonify(data))
+  response.status_code = 200
+  return response 
 
 @app.route('/api/v1/restaurant/menu', methods=['POST'])
 def menu():
-  data = request.json
-  url = data.get('url') if data else None
-  length = data.get('length') if data else None
-  random_order = data.get('random') if data else False
+  query_data = request.json
+
+  url = query_data.get('url') if query_data else None
+  length = query_data.get('length') if query_data else None
+  random_order = query_data.get('random') if query_data else False
+
+  if not length and random_order:
+    response = make_response(jsonify({'error': 'Please provide a length'}))
+    response.status_code = 400
+    return response
+
+  items_arr = fetchRestaurant.getMenu(url)
+
+  if items_arr == []:
+    response = make_response(jsonify({'error': 'Menu not found'}))
+    response.status_code = 404
+    return response
 
   if url and length and random_order:
-    itemarr = fetchRestaurant.getMenu(url)
-    shuffle(itemarr)
-    return jsonify(itemarr[0:length])
+    shuffle(items_arr)
+    response = make_response(jsonify(items_arr[0:length]))
+    response.status_code = 200
+    return response
   if url and length:
-    return jsonify(fetchRestaurant.getMenu(url)[0:length])
+    response = make_response(jsonify(items_arr[0:length]))
+    response.status_code = 200
+    return response
   if url:
-    response = make_response(jsonify(fetchRestaurant.getMenu(url)))
+    response = make_response(jsonify(items_arr))
     response.status_code = 200
     return response
   response = make_response(jsonify({'error': 'Please provide a URL'}))
