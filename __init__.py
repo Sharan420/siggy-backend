@@ -67,4 +67,4 @@ def menu():
   return response
 
 if __name__ == '__main__':
-    app.run( port=os.getenv("PORT"), debug=True)
+    app.run( host="0.0.0.0", port=os.getenv("PORT"), debug=True)
