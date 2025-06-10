@@ -66,7 +66,7 @@ def getMenu(url):
 def getRestaurant(url):
   options = Options()
   options.binary_location = os.getenv('BINARY_LOCATION')
-  #options.add_argument("--headless")
+  options.add_argument("--headless")
   driver = webdriver.Firefox(options=options)
   try:
     # Selenium:
