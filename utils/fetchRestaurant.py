@@ -81,7 +81,8 @@ def getRestaurant(url):
     RestaurantDetailWrapper = WebDriverWait(driver, 20).until(
       EC.presence_of_element_located((By.CSS_SELECTOR, 'div.sc-bJBgwP.bxtKCW'))
     )
-    RestaurantRating = RestaurantDetailWrapper.find_element(By.CSS_SELECTOR, 'div:nth-child(2)').text
+    RestaurantRatingWrapper = RestaurantDetailWrapper.find_element(By.CSS_SELECTOR, 'div.sc-kCMKrZ.gEoQuy')
+    RestaurantRating = RestaurantRatingWrapper.find_element(By.CSS_SELECTOR, 'div.sc-aXZVg.bTHhpu').text
     RestaurantPrice = RestaurantDetailWrapper.find_element(By.CSS_SELECTOR, 'div:nth-child(4)').get_attribute('innerText')
     RestaurantLocationWrapper = driver.find_element(By.CSS_SELECTOR, 'div.sc-bfhvDw.sURFq')
     RestaurantLocation = RestaurantLocationWrapper.find_element(By.CSS_SELECTOR, 'div:nth-child(2)').text
