@@ -75,14 +75,14 @@ def getRestaurant(url):
       return {}
 
     RestaurantName = WebDriverWait(driver, 20).until(
-      EC.presence_of_element_located((By.CSS_SELECTOR, 'h1.sc-aXZVg.cNRZhA'))
+      EC.presence_of_element_located((By.CSS_SELECTOR, 'h1.sc-aXZVg.bTHhpu'))
     ).text
     RestaurantDetailWrapper = WebDriverWait(driver, 20).until(
-      EC.presence_of_element_located((By.CSS_SELECTOR, 'div.sc-eIcdZJ.coysQn'))
+      EC.presence_of_element_located((By.CSS_SELECTOR, 'div.sc-bJBgwP.bxtKCW'))
     )
     RestaurantRating = RestaurantDetailWrapper.find_element(By.CSS_SELECTOR, 'div:nth-child(2)').text
     RestaurantPrice = RestaurantDetailWrapper.find_element(By.CSS_SELECTOR, 'div:nth-child(4)').get_attribute('innerText')
-    RestaurantLocationWrapper = driver.find_element(By.CSS_SELECTOR, 'div.sc-dwalKd.jzDxBO')
+    RestaurantLocationWrapper = driver.find_element(By.CSS_SELECTOR, 'div.sc-bfhvDw.sURFq')
     RestaurantLocation = RestaurantLocationWrapper.find_element(By.CSS_SELECTOR, 'div:nth-child(2)').text
     return ({
       'name': RestaurantName,
