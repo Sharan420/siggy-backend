@@ -1,4 +1,5 @@
+from waitress import serve
 from __init__ import app
 
-if __name__ == '__main__':
-	app.run()
+print("Hello 👋 Server is starting...")
+serve(app, host="0.0.0.0", port=8080)
