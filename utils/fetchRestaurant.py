@@ -38,14 +38,14 @@ def getMenu(url):
     for item in dishes:
       dishWrapper = item.find_element(By.CSS_SELECTOR, ':first-child')
       dishWrapper2 = dishWrapper.find_element(By.CSS_SELECTOR, ':nth-child(2)')
-      dishName = dishWrapper2.find_element(By.CSS_SELECTOR, 'div.sc-aXZVg.cjJTeQ.sc-hIUJlX.gCYyvX').text
-      dishPrice = dishWrapper2.find_element(By.CSS_SELECTOR, 'div.sc-aXZVg.kCbDOU').text
+      dishName = dishWrapper2.find_element(By.CSS_SELECTOR, 'div.sc-aXZVg.eqSzsP.sc-jGONNV.chEURV').text
+      dishPrice = dishWrapper2.find_element(By.CSS_SELECTOR, 'div.sc-aXZVg.chixpw').text
       try:
-        dishDescription = dishWrapper2.find_element(By.CSS_SELECTOR, 'div.sc-aXZVg.iPKpeL.sc-jnOGJG.gaxbGu').text
+        dishDescription = dishWrapper2.find_element(By.CSS_SELECTOR, 'div.sc-aXZVg.gCijQr.sc-gMFoeA.kaRUEI').text
       except:
         dishDescription = 'No Description'
       try:
-        dishImage = dishWrapper.find_element(By.CSS_SELECTOR, 'img.styles_itemImage__DHHqs').get_attribute('src')
+        dishImage = dishWrapper.find_element(By.CSS_SELECTOR, 'img._3XS7H').get_attribute('src')
       except:
         dishImage = 'No Image'
       items.append({
