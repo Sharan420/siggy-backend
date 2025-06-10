@@ -1,4 +1,5 @@
 # Imports:
+import traceback
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
@@ -65,7 +66,7 @@ def getMenu(url):
 def getRestaurant(url):
   options = Options()
   options.binary_location = os.getenv('BINARY_LOCATION')
-  options.add_argument("--headless")
+  #options.add_argument("--headless")
   driver = webdriver.Firefox(options=options)
   try:
     # Selenium:
@@ -75,7 +76,7 @@ def getRestaurant(url):
       return {}
 
     RestaurantName = WebDriverWait(driver, 20).until(
-      EC.presence_of_element_located((By.CSS_SELECTOR, 'h1.sc-aXZVg.bTHhpu'))
+      EC.presence_of_element_located((By.CSS_SELECTOR, 'h1.sc-aXZVg.gONLwH'))
     ).text
     RestaurantDetailWrapper = WebDriverWait(driver, 20).until(
       EC.presence_of_element_located((By.CSS_SELECTOR, 'div.sc-bJBgwP.bxtKCW'))
@@ -92,9 +93,12 @@ def getRestaurant(url):
     })
   
   except Exception as e:
-    print(e)
+    print(f"🔍 Error Type: {type(e).__name__}")
+    print(str(e))
+    traceback.print_exc()
     return "Error"
   finally:
+    print("Quitting driver")
     driver.quit()
 
 def testFunc():
