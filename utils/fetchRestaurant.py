@@ -38,7 +38,7 @@ def getMenu(url):
     for item in dishes:
       dishWrapper = item.find_element(By.CSS_SELECTOR, ':first-child')
       dishWrapper2 = dishWrapper.find_element(By.CSS_SELECTOR, ':nth-child(2)')
-      dishName = dishWrapper2.find_element(By.CSS_SELECTOR, 'div.sc-aXZVg.eqSzsP.sc-jGONNV.chEURV').text
+      dishName = dishWrapper2.find_element(By.CSS_SELECTOR, 'div.sc-aXZVg.eqSzsP.sc-eeDRCY.dwSeRx').text
       dishPrice = dishWrapper2.find_element(By.CSS_SELECTOR, 'div.sc-aXZVg.chixpw').text
       try:
         dishDescription = dishWrapper2.find_element(By.CSS_SELECTOR, 'div.sc-aXZVg.gCijQr.sc-gMFoeA.kaRUEI').text
@@ -59,6 +59,7 @@ def getMenu(url):
     print(e)
     return []
   finally:
+    print("Quitting driver")
     driver.quit()
 
 def getRestaurant(url):
